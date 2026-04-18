@@ -51,11 +51,11 @@ Route::middleware(['auth:api', 'verified.api', 'role:admin'])->prefix('admin')->
 });
 
 // Super Admin routes
-Route::middleware(['auth:api', 'verified.api', 'role:super_admin'])->prefix('super-admin')->group(function () {
-    // admin management, system config...
-    Route::get   ('admins',                  [AdminManagerController::class, 'index']);
-    Route::post  ('admins',                  [AdminManagerController::class, 'store']);
-    Route::patch ('admins/{user}/promote',   [AdminManagerController::class, 'promote']);
-    Route::patch ('admins/{user}/demote',    [AdminManagerController::class, 'demote']);
-    Route::delete('admins/{user}',           [AdminManagerController::class, 'destroy']);
-});
+// Route::middleware(['auth:api', 'verified.api', 'role:super_admin'])->prefix('super-admin')->group(function () {
+//     // admin management, system config...
+//     Route::get   ('admins',                  [AdminManagerController::class, 'index']);
+//     Route::post  ('admins',                  [AdminManagerController::class, 'store']);
+//     Route::patch ('admins/{user}/promote',   [AdminManagerController::class, 'promote']);
+//     Route::patch ('admins/{user}/demote',    [AdminManagerController::class, 'demote']);
+//     Route::delete('admins/{user}',           [AdminManagerController::class, 'destroy']);
+// });

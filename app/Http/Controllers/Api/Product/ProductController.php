@@ -64,7 +64,7 @@ class ProductController extends Controller
         $perPage = $request->get('per_page', 10);
         $products = $query->paginate($perPage);
 
-        return response()->json($products, 200);
+       return response()->json(Product::all(), 200);
     }
     
 

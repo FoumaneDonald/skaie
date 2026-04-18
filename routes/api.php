@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
 
 
-Route::apiResource('products', ProductController::class);
 
 // Public auth routes (rate limited)
 Route::middleware('throttle:10,1')->prefix('auth')->group(function () {
@@ -40,6 +39,9 @@ Route::middleware(['auth:api', 'verified.api', 'role:customer'])->prefix('custom
     Route::patch ('addresses/{address}',         [AddressController::class, 'update']);
     Route::patch ('addresses/{address}/default', [AddressController::class, 'setDefault']);
     Route::delete('addresses/{address}',         [AddressController::class, 'destroy']);
+
+    
+    Route::apiResource('products', ProductController::class);
 });
 
 // Admin routes

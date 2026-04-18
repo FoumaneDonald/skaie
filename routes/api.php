@@ -6,6 +6,10 @@ use App\Http\Controllers\Api\Customer\ProfileController;
 use App\Http\Controllers\Api\Customer\AddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ProductController;
+
+
+Route::apiResource('products', ProductController::class);
 
 // Public auth routes (rate limited)
 Route::middleware('throttle:10,1')->prefix('auth')->group(function () {

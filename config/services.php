@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    // ── Stripe (sandbox) ─────────────────────────────────────────
+    'stripe' => [
+        'key'            => env('STRIPE_KEY'),             // pk_test_...
+        'secret'         => env('STRIPE_SECRET'),          // sk_test_...
+        'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),  // whsec_...
+        'currency'       => env('STRIPE_CURRENCY', 'eur'),
+    ],
+
 ];

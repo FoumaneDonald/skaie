@@ -12,8 +12,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Exclure le webhook Stripe de la vérification CSRF
+        $middleware->validateCsrfTokens(except: [
+            'api/stripe/webhook',
+        ]);
+
         $middleware->alias([
-            'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'role'         => \App\Http\Middleware\RoleMiddleware::class,
             'verified.api' => \App\Http\Middleware\EnsureEmailIsVerified::class,
         ]);
     })

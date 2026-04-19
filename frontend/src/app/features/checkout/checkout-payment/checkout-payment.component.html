@@ -1,0 +1,83 @@
+<!-- src/app/features/checkout/checkout-payment/checkout-payment.component.html -->
+
+<div class="payment-wrapper">
+
+  <!-- ── Chargement ─────────────────────────────────────────── -->
+  <div *ngIf="loading" class="payment-loading">
+    <div class="spinner"></div>
+    <p>Initialisation du paiement…</p>
+  </div>
+
+  <!-- ── Déjà payé ──────────────────────────────────────────── -->
+  <div *ngIf="!loading && paymentStatus?.payment_status === 'succeeded'" class="payment-success">
+    <div class="success-icon">✅</div>
+    <h2>Commande payée</h2>
+    <p>{{ successMessage }}</p>
+    <p class="paid-at">
+      Payée le {{ paymentStatus?.paid_at | date:'dd/MM/yyyy à HH:mm' }}
+    </p>
+    <button class="btn-primary" routerLink="/orders">Voir mes commandes</button>
+  </div>
+
+  <!-- ── Formulaire paiement ────────────────────────────────── -->
+  <div *ngIf="!loading && paymentStatus?.payment_status !== 'succeeded'" class="payment-card">
+
+    <!-- En-tête -->
+    <div class="payment-header">
+      <div class="lock-icon">🔒</div>
+      <div>
+        <h2>Paiement sécurisé</h2>
+        <p class="subtitle">Commande #{{ orderId }}</p>
+      </div>
+      <div class="amount-badge">{{ formattedAmount }}</div>
+    </div>
+
+    <!-- Logos cartes acceptées -->
+    <div class="card-brands">
+      <img src="assets/icons/visa.svg"       alt="Visa"       title="Visa" />
+      <img src="assets/icons/mastercard.svg" alt="Mastercard" title="Mastercard" />
+      <img src="assets/icons/amex.svg"       alt="Amex"       title="American Express" />
+    </div>
+
+    <!-- Zone Stripe Elements -->
+    <div class="stripe-field">
+      <label>Informations de carte</label>
+      <div #cardElement class="card-element-container"></div>
+    </div>
+
+    <!-- Message d'erreur -->
+    <div *ngIf="errorMessage" class="alert alert-error">
+      ⚠️ {{ errorMessage }}
+    </div>
+
+    <!-- Message de succès / attente webhook -->
+    <div *ngIf="successMessage && !paymentStatus" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+
+    <!-- Bouton payer -->
+    <button
+      class="btn-pay"
+      [disabled]="processing"
+      (click)="submitPayment()"
+    >
+      <span *ngIf="!processing">Payer {{ formattedAmount }}</span>
+      <span *ngIf="processing" class="btn-spinner">
+        <span class="spinner-sm"></span> Traitement en cours…
+      </span>
+    </button>
+
+    <!-- Sandbox info (à retirer en production) -->
+    <div class="sandbox-info">
+      <strong>Mode test (sandbox)</strong> — Utilisez la carte :
+      <code>4242 4242 4242 4242</code> · Exp : toute date future · CVC : tout
+    </div>
+
+    <!-- Footer sécurité -->
+    <div class="security-footer">
+      <span>🔒 Paiement sécurisé par</span>
+      <img src="assets/icons/stripe-badge.svg" alt="Stripe" height="20" />
+    </div>
+  </div>
+
+</div>

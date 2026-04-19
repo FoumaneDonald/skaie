@@ -13,6 +13,8 @@ use Laravel\Passport\Contracts\OAuthenticatable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Laravel\Passport\HasApiTokens;
+use App\Models\Order;
+use App\Models\Payment;
 
 #[Fillable(['name', 'email', 'password', 'role', 'phone', 'avatar', 'date_of_birth'])]
 #[Hidden(['password', 'remember_token'])]
@@ -60,5 +62,15 @@ class User extends Authenticatable
     public function defaultAddress(): HasOne
     {
         return $this->hasOne(Address::class)->where('is_default', true);
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
     }
 }

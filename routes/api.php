@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
 
 
-
 // ══════════════════════════════════════════════════════════════
 //  AUTH (public, rate limited)
 // ══════════════════════════════════════════════════════════════
@@ -57,8 +56,8 @@ Route::middleware(['auth:api', 'verified.api', 'role:customer'])->prefix('custom
 
     // ── Paiements ──────────────────────────────────────────────
     Route::get ('payments',                      [PaymentController::class, 'history']);
-    Route::post('orders/{order}/payment',         [PaymentController::class, 'initiate']);
-    Route::get ('orders/{order}/payment/status',  [PaymentController::class, 'status']);
+    Route::post('orders/{order}/payment',        [PaymentController::class, 'initiate']);
+    Route::get ('orders/{order}/payment/status', [PaymentController::class, 'status']);
 });
 
 
@@ -68,8 +67,8 @@ Route::middleware(['auth:api', 'verified.api', 'role:customer'])->prefix('custom
 Route::middleware(['auth:api', 'verified.api', 'role:admin'])->prefix('admin')->group(function () {
 
     // Dashboard & stats
-    Route::get('dashboard',                [DashboardController::class, 'index']);
-    Route::get('dashboard/revenue-summary',[DashboardController::class, 'revenueSummary']);
+    Route::get('dashboard',                 [DashboardController::class, 'index']);
+    Route::get('dashboard/revenue-summary', [DashboardController::class, 'revenueSummary']);
 
     Route::get('users', fn() => \App\Models\User::where('role', 'customer')->get());
 
@@ -97,7 +96,7 @@ Route::middleware(['auth:api', 'verified.api', 'role:super_admin'])->prefix('sup
 
 
 // ══════════════════════════════════════════════════════════════
-//  STRIPE WEBHOOK  (public — pas de auth:api !)
+//  STRIPE WEBHOOK (public — pas de auth:api !)
 // ══════════════════════════════════════════════════════════════
 Route::post('stripe/webhook', [PaymentController::class, 'webhook'])
     ->middleware('throttle:60,1');

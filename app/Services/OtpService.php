@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Mail\EmailVerificationMail;
 use App\Models\EmailVerificationOtp;
+use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -24,6 +25,8 @@ class OtpService
         EmailVerificationOtp::where('user_id', $user->id)->delete();
 
         $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
+        Log::info("Generated OTP for user {$user->email}: {$otp}");
 
         EmailVerificationOtp::create([
             'user_id'    => $user->id,

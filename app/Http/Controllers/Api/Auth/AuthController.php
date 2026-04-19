@@ -139,6 +139,8 @@ class AuthController extends Controller
             return response()->json(['message' => 'Invalid or expired OTP.'], 422);
         }
 
+        $user->markEmailAsVerified(); 
+
         return response()->json(['message' => 'Email verified successfully.']);
     }
 
